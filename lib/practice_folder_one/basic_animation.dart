@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 * 4. Make initState and add functionality. You have to need basic of (vsync and ticker)
 * 5. Animation triggered using : animationController.forward()
 * 6. we need to dispose the animation when we go to other screen : animationController.dispose();
+* 7. delayed animation using Interval
 * */
 
 class BasicAnimation extends StatefulWidget {
