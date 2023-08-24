@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 * 3. Declare Animation and Controller
 * 4. Make initState and add functionality. You have to need basic of (vsync and ticker)
 * 5. Animation triggered using : animationController.forward()
+* 6. we need to dispose the animation when we go to other screen : animationController.dispose();
 * */
 
 class BasicAnimation extends StatefulWidget {
@@ -35,6 +36,13 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
         curve: Curves.decelerate));
 
      animationController.forward(); // triggered the animation
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animationController.dispose();
   }
 
 
