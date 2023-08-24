@@ -1,16 +1,11 @@
 # flutter_animation
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ ## Basic guidelines :
+ 1. Make StatefulWidget
+ 2. Add SingleTickerProviderStateMixin
+ 3. Declare Animation and Controller
+ 4. Make initState and add functionality. You have to need basic knowledge of (vsync and ticker)
+ 5. Animation triggered using : animationController.forward()
+ 6. we need to dispose the animation when we go to other screen : animationController.dispose();
+ 7. delayed animation using Interval
+  
