@@ -18,7 +18,7 @@ class BasicAnimation extends StatefulWidget {
 
 class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProviderStateMixin {
 
-  late Animation animation;
+  late Animation animation,delayedAnimation;
   late AnimationController animationController;
 
 
@@ -35,6 +35,9 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
         parent: animationController,
         curve: Curves.decelerate));
 
+    delayedAnimation = Tween(begin: -1.0,end: 0.0).animate(CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.5,1.0,curve: Curves.decelerate)));
      animationController.forward(); // triggered the animation
   }
 
@@ -60,11 +63,11 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
               title: const Text("Basic Animation"),
             ),
             body: SingleChildScrollView(
-              child: Transform(
-                transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
+              child: Column(
+                children: <Widget>[
+                  Transform(
+                    transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
+                    child: Padding(
                       padding: const EdgeInsets.only(top: 110.0),
                       child: Center(
                         child: Container(
@@ -76,8 +79,11 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
                             child: const Icon(Icons.facebook,size: 100,color: Colors.blue,)),
                       ),
                     ),
-                    const SizedBox(height: 20,),
-                    const Padding(
+                  ),
+                  const SizedBox(height: 20,),
+                  Transform(
+                    transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
+                    child: const Padding(
                       //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextField(
@@ -87,7 +93,10 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
                             hintText: 'Enter valid email id as abc@gmail.com'),
                       ),
                     ),
-                    const Padding(
+                  ),
+                  Transform(
+                    transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
+                    child: const Padding(
                       padding: EdgeInsets.only(
                           left: 15.0, right: 15.0, top: 15, bottom: 0),
                       //padding: EdgeInsets.symmetric(horizontal: 15),
@@ -100,8 +109,11 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
                             hintText: 'Enter secure password'),
                       ),
                     ),
+                  ),
 
-                    SizedBox(
+                  Transform(
+                    transform: Matrix4.translationValues(animation.value * width, 0.0, 0.0),
+                    child: SizedBox(
                       height: 65,
                       width: 360,
                       child: Container(
@@ -118,11 +130,14 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
                         ),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Container(
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Transform(
+                    transform: Matrix4.translationValues(delayedAnimation.value * width, 0.0, 0.0),
+                    child: Container(
                         child: Center(
                           child: Row(
                             children: [
@@ -143,9 +158,9 @@ class _BasicAnimationState extends State<BasicAnimation> with SingleTickerProvid
                             ],
                           ),
                         )
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           );
