@@ -1,101 +1,101 @@
+
 import 'package:flutter/material.dart';
 
-class Transform extends StatefulWidget {
-  const Transform({super.key});
+class TransformExample extends StatefulWidget {
+  const TransformExample({super.key});
 
   @override
-  State<Transform> createState() => _TransformState();
+  State<TransformExample> createState() => _TransformExampleState();
 }
 
-class _TransformState extends State<Transform> with SingleTickerProviderStateMixin{
+class _TransformExampleState extends State<TransformExample> with SingleTickerProviderStateMixin{
 
+  late Animation animation;
   late AnimationController animationController;
-  IconData _buttonIcon = Icons.play_arrow;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
+    animationController = AnimationController(duration: const Duration(seconds: 2),vsync: this);
+
+    animation = Tween(begin: -1.0,end: 0.0).animate(
+      CurvedAnimation(
+          parent: animationController,
+          curve: Curves.ease),
     );
+
   }
 
-  void onPressedHandler() {
-    if (animationController.isDismissed) {
-      animationController.forward();
-      setState(() {
-        _buttonIcon = Icons.arrow_back;
-      });
-    } else {
-      animationController.reverse();
-      setState(() {
-        _buttonIcon = Icons.play_arrow;
-      });
-    }
-  }
-
+ double _size = 50;
+  bool isBigSize = false;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Transform"),
-        backgroundColor: Colors.yellow,
+        centerTitle: true,
+        title: const Text('Transform animation'),
       ),
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
-        child: MainContent(animationController),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.yellow,
-        onPressed: onPressedHandler,
-        child: Icon(
-          _buttonIcon,
-          size: 40,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.yellow,
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 50.0,
-        ),
-      ),
-    );
-  }
-}
+      body: GestureDetector(
+        onTap: (){
+          setState(() {
 
-class RedContainer extends StatelessWidget {
-  const RedContainer({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 250,
-        height: 250,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            color: Colors.red,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0.0, 1.0),
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: Center(
-            child: Text(
-              'TEST',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+            _size = _size == 300 ? 50 : 300;
+            isBigSize = !isBigSize;
+          });
+        },
+        child: Center(
+          child: Container(
+           // duration: const Duration(milliseconds: 600),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(300),
+              color: Colors.blueAccent,
             ),
+            height: 50,
+            child: AnimatedSize(duration: const Duration(seconds: 2),
+               curve: Curves.linearToEaseOut,
+              child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 600),
+                width: _size,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                     Visibility(
+                      visible: isBigSize,
+                        child: const Expanded(flex: 4,
+                          child:TextField (
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 16),
+                          border: InputBorder.none,
+                          //labelText: 'Enter Name',
+                          hintText: 'Enter Your Name',
+                          hintStyle : TextStyle(
+                            color: Colors.white,
+                          )
+
+                      ),
+                    ),
+                    ) ,),
+
+          //   AnimatedPositionedDirectional(child: child, duration: duration)
+
+                    Expanded(
+                      flex: 1,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 800),
+                        child: Icon(
+                        isBigSize == false ? Icons.search_rounded : Icons.search_off_rounded
+                        ,size: 30,color: Colors.white,),
+                      ),),
+                  //  const Expanded(child: Icon(Icons.search_rounded,size: 30,color: Colors.white,),),
+
+                  ],
+                )
+              ),
+            ),
+
           ),
         ),
       ),
